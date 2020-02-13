@@ -3,34 +3,34 @@ const router = express.Router();
 const passport = require("passport");
 const User = require('./../models/user');
 const isLoggedIn = require('../utils/isPoliceLoggedIn');
+const Police  = require('./../models/police');
 
-router.get('/', function (req, res) {
-    res.render('index');
-});
-
-router.get('/register', function (req, res) {
-    res.render('register');
-});
 
 router.get('/dashboard', isLoggedIn, async (req, res) => {
     try {
-        const user = await User.findById(req.user._id);
+        console.log(req.user);
+        const user = await Police.findById(req.user._id);
         res.render('dashboard', { user });
     } catch (e) {
         console.log(e);
     }
 });
 
+router.get('/register', function (req, res) {
+    res.render('policeregister');
+});
+
 router.get('/login', function (req, res) {
     if (req.isAuthenticated()) {
         return res.redirect('/dashboard');
     }
-    res.render('login');
+    res.render('policelogin');
 });
 
 router.post('/register', function (req, res) {
-    const newUser = new User({ username: req.body.username, email: req.body.email,status: req.body });
-    User.register(newUser, req.body.password, function (err, user) {
+    //console.log("Police request recieved.");
+    const newPolice = new Police({ username: req.body.username, email: req.body.email,status: "police" });
+    Police.register(newPolice, req.body.password, function (err, user) {
         if (err) {
             console.log(err);
             req.flash('error', err.message);
@@ -43,21 +43,15 @@ router.post('/register', function (req, res) {
 });
 
 router.post("/login", passport.authenticate("local", {
-    failureRedirect: "/login",
+    failureRedirect: "/police/login",
     failureFlash: true
 }), function (req, res) {
-    res.redirect('/dashboard');
+
+    console.log(req.body)
+    res.redirect('/police/dashboard');
 });
 
-router.get("/logout", function (req, res) {
-    req.logout();
-    if (req.session) {
-        req.session.destroy((err) => {
-            if (err) console.log('Error : Failed to destroy the session during logout.', err);
-            req.user = null;
-            res.redirect('/');
-        });
-    }
-});
+
+
 
 module.exports = router;
