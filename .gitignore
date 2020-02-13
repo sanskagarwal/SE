@@ -1,0 +1,12 @@
+# Optional npm cache directory
+.npm
+
+# API keys and secrets
+.env
+
+# Dependency directory
+node_modules
+package-lock.json
+
+# Editors
+.vscode
