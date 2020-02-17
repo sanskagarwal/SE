@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const User = require('./../models/user');
-const isLoggedIn = require('../utils/isPoliceLoggedIn');
+const isLoggedIn = require('../utils/isLoggedIn');
 const Police  = require('./../models/police');
 
 
 router.get('/dashboard', isLoggedIn, async (req, res) => {
     try {
-        console.log(req.user);
+        //console.log(req);
         const user = await Police.findById(req.user._id);
         res.render('dashboard', { user });
     } catch (e) {
@@ -22,9 +21,9 @@ router.get('/register', function (req, res) {
 
 router.get('/login', function (req, res) {
     if (req.isAuthenticated()) {
-        return res.redirect('/dashboard');
+        return res.redirect('dashboard');
     }
-    res.render('policelogin');
+    res.render('policeLogin');
 });
 
 router.post('/register', function (req, res) {
@@ -34,10 +33,10 @@ router.post('/register', function (req, res) {
         if (err) {
             console.log(err);
             req.flash('error', err.message);
-            return res.redirect('/register');
+            return res.redirect('register');
         }
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/dashboard');
+            res.redirect('dashboard');
         });
     });
 });
@@ -48,7 +47,7 @@ router.post("/login", passport.authenticate("local", {
 }), function (req, res) {
 
     console.log(req.body)
-    res.redirect('/police/dashboard');
+    res.redirect('dashboard');
 });
 
 

@@ -1,0 +1,40 @@
+<%- include ./../partials/header.ejs %>
+
+<style>
+    #mainContainer {
+        max-width: 400px;
+    }
+
+    input {
+        background-color: rgb(244, 245, 246);
+        font-family: "Nunito Sans", sans-serif;
+    }
+
+    #loginForm {
+
+        position: relative;
+        top: 20%;
+        transform: translateY(30%);
+        background-color: rgb(255, 255, 255);
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 4px 0px;
+        border-radius: 8px;
+        padding: 40px;
+    }
+</style>
+
+<div class='container' id="mainContainer">
+    <form id='loginForm' action='/citizen/login' method='POST'>
+        <%- include ./../partials/alert.ejs %>
+        <h1>Sign In</h1>
+        <br>
+        <div class='form-group' spellcheck="false">
+            <label for="_id">Username</label>
+            <input class="form-control" id="_id" name="username" required type="text" data-test="_id" value="">
+        </div>
+        <div class='form-group' spellcheck="false">
+            <label for="_password">Password</label>
+            <input class="form-control" id="_password" name="password" placeholder="" required type="password">
+        </div>
+        <button type="submit" class='form-control btn btn-primary'>Log in</button>
+    </form>
+</div>

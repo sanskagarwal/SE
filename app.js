@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
-const User = require('./models/user');
+
 const Citizen = require('./models/citizen');
 const Police = require('./models/police');
 
@@ -46,13 +46,8 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-// passport.use(new localStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 
-// passport.use(new localStrategy(Citizen.authenticate()));
-// passport.serializeUser(Citizen.serializeUser());
-// passport.deserializeUser(Citizen.deserializeUser());
+
 
 passport.serializeUser((entity,done)=>{
     done(null, { username: entity.username, status: entity.status });
@@ -87,18 +82,14 @@ passport.deserializeUser(function (obj, done) {
     }
 });
 
-passport.use(new localStrategy(Police.authenticate()));
-passport.serializeUser(Police.serializeUser());
-passport.deserializeUser(Police.deserializeUser());
-
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     next();
 });
 
 
-//app.use(indexRoutes);
-//app.use('/citizen',citizenRoutes);
+app.use(indexRoutes);
+app.use('/citizen',citizenRoutes);
 app.use('/police',policeRoutes);
 
 const PORT = process.env.PORT;

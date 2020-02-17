@@ -1,42 +1,55 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const User = require('./../models/user');
-const isLoggedIn = require('../utils/isPoliceLoggedIn');
+const isLoggedIn = require('../utils/isLoggedIn');
+const Citizen  = require('./../models/citizen');
 
-router.get('/register', function (req, res) {
-    res.render('register');
+
+router.get('/dashboard', isLoggedIn, async (req, res) => {
+    try {
+        //console.log(req);
+        const user = await Citizen.findById(req.user._id);
+        res.render('dashboard', { user });
+    } catch (e) {
+        console.log(e);
+    }
 });
 
+router.get('/register', function (req, res) {
+    res.render('citizenRegister');
+});
 
 router.get('/login', function (req, res) {
     if (req.isAuthenticated()) {
-        return res.redirect('/dashboard');
+        return res.redirect('dashboard');
     }
-    res.render('login');
+    res.render('citizenLogin');
 });
 
-
 router.post('/register', function (req, res) {
-    const newUser = new User({ username: req.body.username, email: req.body.email,status: 'citizen' });
-    User.register(newUser, req.body.password, function (err, user) {
+    const newCitizen = new Citizen({ username: req.body.username, email: req.body.email,status: "citizen" });
+    Citizen.register(newCitizen, req.body.password, function (err, user) {
         if (err) {
             console.log(err);
             req.flash('error', err.message);
-            return res.redirect('/register');
+            return res.redirect('register');
         }
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/dashboard');
+            res.redirect('dashboard');
         });
     });
 });
 
 router.post("/login", passport.authenticate("local", {
-    failureRedirect: "/login",
+    failureRedirect: "login",
     failureFlash: true
 }), function (req, res) {
-    
-    res.redirect('/dashboard');
+
+    console.log(req.body)
+    res.redirect('dashboard');
 });
+
+
+
 
 module.exports = router;
