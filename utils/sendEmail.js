@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendEmail = (email) => {
+const sendEmail = (email,subject, msg) => {
     let transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -14,18 +14,16 @@ const sendEmail = (email) => {
     const message = {
         from: process.env.emailUsername,
         to: email,
-        subject: "XYZ", // Subject line
-        html: `
-            <h1>Enter Here</h1>
-        `
+        subject: subject, // Subject line
+        html:`<p>${msg}</p>`
     };
-    transport.sendMail(message, function (err, info) {
-        if (err) {
-            return;
-        } else {
-            console.log("Email Sent");
-        }
-    });
+    // transport.sendMail(message, function (err, info) {
+    //     if (err) {
+    //         return;
+    //     } else {
+    //         console.log("Email Sent");
+    //     }
+    // });
 }
 
 module.exports = sendEmail;

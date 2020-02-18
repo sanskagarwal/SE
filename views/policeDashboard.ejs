@@ -14,4 +14,51 @@
     <%- include ./../partials/alert.ejs %>
     <br>
     <br>
+
+
+    <h1>List</h1>
+    <table class="table">
+    <!-- <% console.log(list); %> -->
+    <tr>
+        <td>Name</td>
+        <td>Gender</td>
+        <td>Age</td>
+        <td>Crime Type</td>
+        <td>Region</td>
+        <td>Danger</td>
+    </tr>
+    <% for(x in list) { %>
+        <tr>
+            <td> <%= list[x].name %> </td>
+            <td> <%= list[x].gender %> </td>
+            <td> <%= list[x].age %> </td>
+            <td> <%= list[x].crimeType %> </td>
+            <td> <%= list[x].region %>  </td>
+            <td> <%= list[x].danger %> </td>
+        </tr>
+    <% } %>
+    </table>
+
+
+    <h1>Report List</h1>
+    <table class="table">
+    <!-- <% console.log(list); %> -->
+    <tr>
+        <td>Name</td>
+        <td>Gender</td>
+        <td>Age</td>
+        <td>Crime Type</td>
+        <td>Region</td>
+        <td>Danger</td>
+    </tr>
+    <% for(x in reportList) { %>
+        <tr>
+            <td> <%= reportList[x].victimDetails.firstName %>  <%= reportList[x].victimDetails.lastName%> </td>
+            <td> <%= reportList[x].victimDetails.email %> </td>
+            <td> <%= reportList[x].victimDetails.address.state %> </td>
+            <td> <%= reportList[x].incidentDetails.nature %> </td>
+            <td> <%= reportList[x].status %> </td>
+        </tr>
+    <% } %>
+    </table>
 </div>

@@ -2,10 +2,21 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const isLoggedIn = require('../utils/isLoggedIn');
- const Citizen = require('./../models/citizen');
+const sendEmail = require('../utils/sendEmail');
+const Citizen = require('./../models/citizen');
+const Report = require('./../models/report');
 const checkStatus = require('./../utils/checkStatus');
+const { TextAnalyticsClient, TextAnalyticsApiKeyCredential } = require("@azure/ai-text-analytics");
 
-router.get('/dashboard', isLoggedIn,checkStatus, async (req, res) => {
+
+require('dotenv').config()
+
+const key = process.env.AZURE_TEXT_ANALYTICS_KEY;
+const endpoint = process.env.AZURE_TEXT_ANALYTICS_ENDPOINT;
+// console.log(process.env.AZURE_TEXT_ANALYTICS_KEY);
+const textAnalyticsClient = new TextAnalyticsClient(endpoint, new TextAnalyticsApiKeyCredential(key));
+
+router.get('/dashboard', isLoggedIn, checkStatus, async (req, res) => {
     try {
         const user = await Citizen.findById(req.user._id);
         //if (user.status === 'citizen') {
@@ -53,6 +64,87 @@ router.post("/login", passport.authenticate("citizenLogin", {
 });
 
 
+router.post("/report", async (req, res) => {
+    // console.log(req.body);
 
+    var sentimentInput = [req.body.incidentDescription];
+    const sentimentResult = await textAnalyticsClient.analyzeSentiment(sentimentInput);
+    let urgency = 'info';
+    let score = sentimentResult[0].sentimentScores.negative.toFixed(5);
+    switch (true) {
+        case (score < 0.9): urgency = 'info'; break;
+        case (score < 0.95): urgency = 'info'; break;
+        case (score <= 0.99): urgency = 'warning'; break;
+        default: urgency = 'danger';
+    }
+
+    var address = {
+        state: req.body.state,
+        district: req.body.district,
+        policeStation: req.body.policeStation,
+        city: req.body.city,
+        landmark: req.body.landmark,
+        streetName: req.body.streetName
+    };
+    var victim = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        fatherName: req.body.fatherName,
+        gender: req.body.gender,
+        email: req.body.email,
+        mobileNumber: req.body.mobileNumber,
+        age: req.body.age,
+        idType: req.body.idType,
+        idNumber: req.body.idNumber,
+        address: address
+    };
+
+    var incident = {
+        nature: req.body.nature,
+        state: req.body.incidentState,
+        district: req.body.incidentDistrict,
+        policeStation: req.body.incidentPoliceStation,
+        incidentPlace: req.body.incidentPlace,
+        pincode: req.body.pincode,
+        incidentAddress: req.body.incidentAddress,
+        incidentDescription: req.body.incidentDescription
+    };
+
+    var evidence = {
+        description: req.body.description,
+        details: req.body.details
+    };
+
+    var report = {
+        victimDetails: victim,
+        incidentDetails: incident,
+        evidenceDetails: evidence,
+        urgency: urgency,
+        status:'Available',
+        appointedPersonnel:undefined
+    };
+
+    console.log(sentimentResult[0].sentimentScores);
+
+
+    //console.log("Report: ", report);
+
+    Report.create(report, function (err, data) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(data.victimDetails.firstName + " inserted.");
+            sendEmail(req.body.email, 'File Report for Police', 'Thank you for submitting your report. We will get back to you shortly.');
+
+            if (score >= 0.99) {
+
+                sendEmail('ygyashgoyal@gmail.com', 'Urgent FIR', 'A highly urgent report has been recorded that requires immediate attention. Kindly look into it. We need YGPOLICE.');
+            }
+        }
+    });
+    res.redirect('dashboard');
+
+});
 
 module.exports = router;

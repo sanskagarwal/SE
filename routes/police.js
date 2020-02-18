@@ -2,15 +2,21 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const isLoggedIn = require('../utils/isLoggedIn');
- const Police  = require('./../models/police');
-const User = require('./../models/user');
+const Police  = require('./../models/police');
+const Report = require('./../models/report');
 const checkStatus = require('./../utils/checkStatus');
+const Criminal = require('./../models/criminal');
 
 
 router.get('/dashboard', isLoggedIn,checkStatus, async (req, res) => {
     try {
         const user = await Police.findById(req.user._id);
-        res.render('policeDashboard', { user });
+        
+        var criminalData = await Criminal.find();
+
+        var reportData = await Report.find({});
+        res.render('policeDashboard', { user:user,list:criminalData,reportList: reportData});
+
     } catch (e) {
         console.log(e);
     }

@@ -16,8 +16,9 @@ const Police = require('./models/police');
 const indexRoutes = require('./routes/index');
 const citizenRoutes = require('./routes/citizen');
 const policeRoutes = require('./routes/police');
+const criminalRoutes = require('./routes/criminal');
 
-require('dotenv').config()
+require('dotenv').config();
 
 const mongoDBURI = process.env.MONGODB_URI;
 mongoose.set('useNewUrlParser', true);
@@ -97,6 +98,7 @@ app.use(function (req, res, next) {
 app.use(indexRoutes);
 app.use('/citizen',citizenRoutes);
 app.use('/police',policeRoutes);
+app.use('/criminal',criminalRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, function () {
