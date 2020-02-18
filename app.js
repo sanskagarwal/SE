@@ -8,10 +8,10 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
-const User = require('./models/user');
+//const User = require('./models/user');
 
-// const Citizen = require('./models/citizen');
-// const Police = require('./models/police');
+const Citizen = require('./models/citizen');
+const Police = require('./models/police');
 
 const indexRoutes = require('./routes/index');
 const citizenRoutes = require('./routes/citizen');
@@ -48,8 +48,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new localStrategy(User.authenticate()));
-// passport.use(new localStrategy(Citizen.authenticate()));
+passport.use('policeLogin',new localStrategy(Police.authenticate()));
+passport.use('citizenLogin',new localStrategy(Citizen.authenticate()));
 
 
 
@@ -60,7 +60,7 @@ passport.serializeUser((entity,done)=>{
 passport.deserializeUser(function (obj, done) {
     switch (obj.status) {
         case 'citizen':
-            User.findOne({username: obj.username})
+            Citizen.findOne({username: obj.username})
                 .then(user => {
                     if (user) {
                         done(null, user);
@@ -71,7 +71,7 @@ passport.deserializeUser(function (obj, done) {
                 });
             break;
         case 'police':
-            User.findOne({username: obj.username})
+            Police.findOne({username: obj.username})
                 .then(police => {
                     if (police) {
                         done(null, police);

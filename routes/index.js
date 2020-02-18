@@ -16,4 +16,12 @@ router.get("/logout", function (req, res) {
     }
 });
 
+router.get("/report",function(req,res){
+    res.render('report');
+});
+
+router.post("/report",function(req,res){
+    
+});
+
 module.exports = router;
