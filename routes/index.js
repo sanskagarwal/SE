@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Forum = require("./../models/forum");
 
 router.get('/', function (req, res) {
     res.render('index');
@@ -16,14 +17,25 @@ router.get("/logout", function (req, res) {
     }
 });
 
-router.get("/report",function(req,res){
+router.get("/report", function (req, res) {
     res.render('report');
 });
 
-router.post("/report",function(req,res){
+router.post("/report", function (req, res) {
 
 });
 
+router.get("/report", (req, res) => {
+    res.render("report");
+});
 
+router.get("/forum", async (req, res) => {
+    try {
+        const msg = await Forum.find({}, { _id: 0 });
+        res.render("forum", { msg: msg });
+    } catch (e) {
+        console.log(e);
+    }
+})
 
 module.exports = router;

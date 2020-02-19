@@ -13,7 +13,6 @@ require('dotenv').config()
 
 const key = process.env.AZURE_TEXT_ANALYTICS_KEY;
 const endpoint = process.env.AZURE_TEXT_ANALYTICS_ENDPOINT;
-// console.log(process.env.AZURE_TEXT_ANALYTICS_KEY);
 const textAnalyticsClient = new TextAnalyticsClient(endpoint, new TextAnalyticsApiKeyCredential(key));
 
 router.get('/dashboard', isLoggedIn, checkStatus, async (req, res) => {

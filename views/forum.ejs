@@ -1,0 +1,46 @@
+<%- include ./../partials/header.ejs %>
+
+<link rel="stylesheet" href="/css/chat.css">
+<script type="text/javascript" src="/js/lib/moment.min.js"></script>
+
+<div class="chat__main">
+    <ol id="message-list" class="chat__messages">
+        <% msg.forEach((message) => { %>
+        <li class="message">
+            <div class="message__title">
+                <h4><%= message.from %></h4>
+                <span><%= message.createdAt %></span>
+                <% if(message.admin) { %>
+                <img width="20" height="20" style="margin-left: 10px; display: inline;" src="/admin.svg" />
+                <% } %>
+            </div>
+            <div class="message__body">
+                <p><%= message.text %></p>
+            </div>
+        </li>
+        <% }) %>
+    </ol>
+    <div class="chat__footer">
+        <form id="message-form">
+            <input name="message" type="text" placeholder="Message" autofocus>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<script id="message-template" type="text/template">
+    <li class="message">
+        <div class="message__title">
+            <h4>{{from}}</h4>
+            <span>{{createdAt}}</span>
+            {{#admin}}
+            <img width="20" height="20" style="margin-left: 10px; display: inline;" src="/admin.svg" />
+            {{/admin}}
+        </div>
+        <div class="message__body"><p>{{text}}</p></div>
+    </li>
+</script>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/js/lib/mustache.min.js"></script>
+<script type="text/javascript" src="/js/chat.js"></script>
