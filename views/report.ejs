@@ -1,27 +1,22 @@
 <%- include ./../partials/header.ejs %>
 
 <div class="container">
-    <h2>
-        <p><ins>Victim Details</ins></p>
-    </h2>
-    <form>
+    <form method="POST" action="/citizen/report">
+        <h2>
+            <p><ins>Victim Details</ins></p>
+        </h2>
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label for="validationServer01">First name</label>
-                <input type="text" class="form-control" id="validationServer01" placeholder="First name" required>
+                <label>First name</label>
+                <input type="text" class="form-control" placeholder="First name" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServer02">Last name</label>
-                <input type="text" class="form-control" id="validationServer02" placeholder="Last name" required>
+                <label>Last name</label>
+                <input type="text" class="form-control" placeholder="Last name" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServerUsername">Father's Name</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                    </div>
-                    <input type="text" class="form-control" id="validationServerUsername" placeholder="father name"
-                        aria-describedby="inputGroupPrepend3" required>
-                </div>
+                <label>Father's Name</label>
+                <input type="text" class="form-control" placeholder="father name" required>
             </div>
         </div>
 
@@ -36,28 +31,23 @@
                 </select>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServer02">Email Id</label>
-                <input type="text" class="form-control" id="validationServer02" placeholder="Email" required>
+                <label>Email Id</label>
+                <input type="text" class="form-control" placeholder="Email" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServerUsername">Mobile Number</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                    </div>
-                    <input type="Number" class="form-control" id="validationServerUsername" placeholder="Mobile number"
-                        aria-describedby="inputGroupPrepend3" required>
-                </div>
+                <label>Mobile Number</label>
+                <input type="Number" class="form-control" placeholder="Mobile number" required>
             </div>
         </div>
 
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label for="validationServer01">Age</label>
-                <input type="Number" class="form-control" id="validationServer01" placeholder="" required>
+                <label>Age</label>
+                <input type="Number" class="form-control" placeholder="" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">ID Type</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <label class="mr-sm-2">ID Type</label>
+                <select class="custom-select mr-sm-2">
                     <option selected>Select</option>
                     <option value="1">Aadhaar Card</option>
                     <option value="2">Voter Id</option>
@@ -67,13 +57,8 @@
                 </select>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServerUsername">ID Number</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                    </div>
-                    <input type="Number" class="form-control" id="validationServerUsername" placeholder="Valid number"
-                        aria-describedby="inputGroupPrepend3" required>
-                </div>
+                <label>ID Number</label>
+                <input type="Number" class="form-control" placeholder="Valid number" required>
             </div>
         </div>
 
@@ -82,8 +67,8 @@
         </h2>
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">State</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <label class="mr-sm-2">State</label>
+                <select class="custom-select mr-sm-2">
                     <option selected>Select</option>
                     <option value="1">UP</option>
                     <option value="2">Jharkhand</option>
@@ -93,8 +78,8 @@
                 </select>
             </div>
             <div class="col-md-4 mb-3">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">District</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <label class="mr-sm-2">District</label>
+                <select class="custom-select mr-sm-2">
                     <option selected>Select</option>
                     <option value="1">Ranchi</option>
                     <option value="2">Patna</option>
@@ -104,69 +89,57 @@
                 </select>
             </div>
             <div class="col-md-4 mb-3">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Police Station</label>
-                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <label class="mr-sm-2">Police Station</label>
+                <select class="custom-select mr-sm-2">
                     <option selected>Select</option>
-                    <option value="1">habibpur p.s</option>
-                    <option value="2">badshanagar p.s</option>
-                    <option value="3">Ranchi p.s</option>
-                    <option value="3">Patna p.s</option>
-                    <option value="3">kolkata ps</option>
+                    <option value="1">Habibpur PS</option>
+                    <option value="2">Badshanagar PS</option>
+                    <option value="3">Ranchi PS</option>
+                    <option value="3">Patna PS</option>
+                    <option value="3">Kolkata PS</option>
                 </select>
             </div>
         </div>
 
         <div class="form-row">
             <div class="col-md-4 mb-3">
-                <label for="validationServer01">Village/City</label>
-                <input type="text" class="form-control" id="validationServer01" placeholder="Village/City" required>
+                <label>Village/City</label>
+                <input type="text" class="form-control" placeholder="Village/City" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServer02">Land Mark</label>
-                <input type="text" class="form-control" id="validationServer02" placeholder="Local area" required>
+                <label>Land Mark</label>
+                <input type="text" class="form-control" placeholder="Local area" required>
             </div>
             <div class="col-md-4 mb-3">
-                <label for="validationServerUsername">Street name</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                    </div>
-                    <input type="Number" class="form-control" id="validationServerUsername" placeholder="Street name"
-                        aria-describedby="inputGroupPrepend3" required>
-                </div>
+                <label>Street name</label>
+                <input type="text" class="form-control" placeholder="Street name" required>
             </div>
         </div>
 
         <div class="form-group">
             <div class="form-check">
-                <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
+                <input type="checkbox" value="" required>
                 <label class="form-check-label">
                     Agree to terms and conditions
                 </label>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Submit form</button>
-    </form>
-</div>
-
-<div id="section3" class="container">
-    <div id="pnlrep1">
         <h2>
             <p><ins>Incident Details</ins></p>
         </h2>
-        <div class="row">
+        <div class="form-row">
             <div class="form-group col-sm-6">
-                <label for="">Nature of Complaint <span style="color:Red;">*</span></label>
+                <label>Nature of Complaint <span style="color:Red;">*</span></label>
                 <select class="form-control">
                     <option selected="selected" value="0">--Select--</option>
                     <option value="1">Against Private Person</option>
                     <option value="2">Against Organisation/Department</option>
                     <option value="3">Against Public Servant (Civil)</option>
                 </select>
-                <span id="RequiredFieldValidator1" style="color:Red;display:none;"></span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="">State <span style="color:Red;">*</span></label>
-                <select name="ddlstatef" id="ddlstatef" class="form-control">
+                <label>State <span style="color:Red;">*</span></label>
+                <select name="ddlstatef" class="form-control">
                     <option selected="selected" value="0">--Select--</option>
                     <option value="1">ANDAMAN AND NICOBAR</option>
                     <option value="2">ANDHRA PRADESH</option>
@@ -205,59 +178,50 @@
                     <option value="35">UTTARAKHAND</option>
                     <option value="32">WEST BENGAL</option>
                 </select>
-                <span id="RequiredFieldValidator2" style="color:Red;display:none;"></span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="">District</label>
+                <label>District</label>
                 <select name="ddldistrictf" id="ddldistrictf" class="form-control">
                     <option selected="selected" value="0">--Select--</option>
 
                 </select>
             </div>
             <div class="form-group col-sm-6">
-                <label for="">Police Station</label>
+                <label>Police Station</label>
                 <select name="ddlpstf" id="ddlpstf" class="form-control">
                     <option selected="selected" value="0">--Select--</option>
 
                 </select>
             </div>
             <div class="form-group col-sm-6">
-                <label for="">Incident place <span style="color:Red;">*</span></label>
+                <label>Incident place <span style="color:Red;">*</span></label>
                 <input type="text" class="form-control" />
-                <span id="RequiredFieldValidator3" style="color:Red;display:none;"></span>
             </div>
             <div class="form-group col-sm-6">
-                <label for="">Pin Code</label>
+                <label>Pin Code</label>
                 <input name="txtincpincode" type="text" maxlength="6" class="form-control inpt">
             </div>
             <div class="form-group col-sm-6">
-                <label for="">Incident Address <span style="color:Red;">*</span></label>
+                <label>Incident Address <span style="color:Red;">*</span></label>
                 <textarea name="txtincaddress" rows="4" cols="10" id="txtincaddress" class="form-control"></textarea>
-                <span id="RequiredFieldValidator4" style="color:Red;display:none;"></span>
             </div>
 
             <div class="form-group col-sm-6">
-                <label for="">Incident Description <span style="color:Red;">*</span></label>
+                <label>Incident Description <span style="color:Red;">*</span></label>
                 <textarea name="txtincdesc" rows="4" cols="10" id="txtincdesc" class="form-control"></textarea>
-                <span id="RequiredFieldValidator5" style="color:Red;display:none;"></span>
-            </div>
-            <div class="clearfix"></div>
-            <div class="form-group col-sm-6">
-                <button class="btn btn-success">Save Incident Details</button>
             </div>
         </div>
-    </div>
-    <div id="pnlrep2">
+
         <h2>
             <p><ins>Evidence Details</ins></p>
         </h2>
         <div class="row">
             <div class="form-group col-sm-6">
-                <label for="">Description of Evidence</label>
+                <label>Description of Evidence</label>
                 <textarea name="txtevdesc" rows="4" cols="10" id="txtevdesc" class="form-control"></textarea>
             </div>
             <div class="form-group col-sm-6">
-                <label for="">Details of Evidence</label>
+                <label>Details of Evidence</label>
                 <textarea rows="4" cols="10" class="form-control"></textarea>
             </div>
             <div class="form-group col-sm-12">
@@ -267,11 +231,10 @@
                 </div>
             </div>
             <br>
-            <div class="form-group col-sm-6">
-                <button class="btn btn-primary" name="btncrimrepsubmit" id="btncrimrepsubmit">Submit Report</button>
-            </div>
         </div>
-    </div>
+
+        <button class="btn btn-warning">Submit</button>
+    </form>
 </div>
 </body>
 
