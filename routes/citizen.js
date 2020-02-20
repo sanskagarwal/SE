@@ -62,13 +62,23 @@ router.post("/login", passport.authenticate("citizenLogin", {
     res.redirect('dashboard');
 });
 
+router.get("/report", function (req, res) {
+    res.render('report');
+});
 
 router.post("/report", async (req, res) => {
     // console.log(req.body);
 
     var sentimentInput = [req.body.incidentDescription];
-    const sentimentResult = await textAnalyticsClient.analyzeSentiment(sentimentInput);
     let urgency = 'info';
+    let sentimentResult = {};
+    try {
+        sentimentResult = await textAnalyticsClient.analyzeSentiment(sentimentInput);
+
+    }
+    catch (e) {
+        console.log(e);
+    }
     let score = sentimentResult[0].sentimentScores.negative.toFixed(5);
     switch (true) {
         case (score < 0.9): urgency = 'info'; break;
@@ -119,14 +129,14 @@ router.post("/report", async (req, res) => {
         incidentDetails: incident,
         evidenceDetails: evidence,
         urgency: urgency,
-        status:'Available',
-        appointedPersonnel:undefined
+        status: 'Available',
+        appointedPersonnel: undefined
     };
 
     console.log(sentimentResult[0].sentimentScores);
 
 
-    //console.log("Report: ", report);
+    console.log("Report: ", report);
 
     Report.create(report, function (err, data) {
         if (err) {

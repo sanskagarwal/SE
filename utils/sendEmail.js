@@ -17,13 +17,13 @@ const sendEmail = (email,subject, msg) => {
         subject: subject, // Subject line
         html:`<p>${msg}</p>`
     };
-    // transport.sendMail(message, function (err, info) {
-    //     if (err) {
-    //         return;
-    //     } else {
-    //         console.log("Email Sent");
-    //     }
-    // });
+    transport.sendMail(message, function (err, info) {
+        if (err) {
+            return;
+        } else {
+            console.log("Email Sent");
+        }
+    });
 }
 
 module.exports = sendEmail;
