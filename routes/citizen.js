@@ -18,11 +18,9 @@ const textAnalyticsClient = new TextAnalyticsClient(endpoint, new TextAnalyticsA
 router.get('/dashboard', isLoggedIn, checkStatus, async (req, res) => {
     try {
         const user = await Citizen.findById(req.user._id);
-        //if (user.status === 'citizen') {
+        const reports = await Report.find()
         res.render('citizenDashboard', { user });
-        //} else {
-        //     res.render('policeDashboard', { user });
-        // }
+        
     } catch (e) {
         console.log(e);
     }
